@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
-import { Search, Download, ShieldCheck } from "lucide-react";
+import { Search, Download, ShieldCheck, EyeOff } from "lucide-react";
 import type { StructuredField } from "@/lib/mock-data";
+
+const MASK_TOKEN = "[MASKED]";
 
 type Props = { rows: StructuredField[] };
 
@@ -61,12 +63,24 @@ export function StructuredTable({ rows }: Props) {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((r) => (
-              <tr key={r.field} className="border-t border-border hover:bg-surface-muted/60">
-                <td className="px-5 py-3 font-medium text-foreground">{r.field}</td>
-                <td className="px-5 py-3 text-muted-foreground">{r.value}</td>
-              </tr>
-            ))}
+            {filtered.map((r) => {
+              const isMasked = r.value === MASK_TOKEN;
+              return (
+                <tr key={r.field} className="border-t border-border hover:bg-surface-muted/60">
+                  <td className="px-5 py-3 font-medium text-foreground">{r.field}</td>
+                  <td className="px-5 py-3">
+                    {isMasked ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-md bg-destructive/10 px-2.5 py-0.5 text-xs font-semibold text-destructive">
+                        <EyeOff className="h-3 w-3" />
+                        MASKED
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground">{r.value}</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
             {filtered.length === 0 && (
               <tr>
                 <td colSpan={2} className="px-5 py-8 text-center text-sm text-muted-foreground">

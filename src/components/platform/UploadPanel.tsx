@@ -2,25 +2,28 @@ import { useRef, useState } from "react";
 import { Upload, FileImage, X, ArrowRight } from "lucide-react";
 import implantCardSample from "@/assets/implant_card.png";
 
+type FileEntry = { name: string; previewUrl: string; raw: File };
+
 type Props = {
-  onProcess: (file: { name: string; previewUrl: string }) => void;
+  onProcess: (file: FileEntry) => void;
 };
 
 export function UploadPanel({ onProcess }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<{ name: string; previewUrl: string } | null>(
-    null,
-  );
+  const [file, setFile] = useState<FileEntry | null>(null);
   const [dragOver, setDragOver] = useState(false);
 
   const handleFiles = (files: FileList | null) => {
     if (!files || !files[0]) return;
     const f = files[0];
-    setFile({ name: f.name, previewUrl: URL.createObjectURL(f) });
+    setFile({ name: f.name, previewUrl: URL.createObjectURL(f), raw: f });
   };
 
-  const useSample = () => {
-    setFile({ name: "implant_card.png", previewUrl: implantCardSample });
+  const useSample = async () => {
+    const res  = await fetch(implantCardSample);
+    const blob = await res.blob();
+    const raw  = new File([blob], "implant_card.png", { type: "image/png" });
+    setFile({ name: "implant_card.png", previewUrl: implantCardSample, raw });
   };
 
   return (
