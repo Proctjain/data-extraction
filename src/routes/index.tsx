@@ -178,7 +178,8 @@ function Index() {
       const formData = new FormData();
       formData.append("file", f.raw, f.name);
 
-      const res = await fetch("/api/extract", { method: "POST", body: formData });
+      const apiBase = import.meta.env.VITE_API_BASE_URL ?? "";
+      const res = await fetch(`${apiBase}/api/extract`, { method: "POST", body: formData });
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({ detail: res.statusText }));
