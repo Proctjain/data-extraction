@@ -10,7 +10,7 @@ export function AppHeader() {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-semibold tracking-tight text-foreground">
-              Implant Intelligence
+              Doc Intelligence
             </span>
             <span className="text-[11px] text-muted-foreground">
               Document Operations Platform

@@ -9,11 +9,11 @@ export function Hero() {
           AI Document Intelligence · Healthcare Operations
         </div>
         <h1 className="mt-5 text-balance text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
-          AI-Powered Implant Record Structuring
+          AI-Powered Text Extraction
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg">
           Transform scanned implant cards into validated, structured records for
-          downstream clinical and operational workflows.
+          downstream workflows.
         </p>
       </div>
     </section>
